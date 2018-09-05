@@ -55,8 +55,6 @@ func checkWinner(gameData []string) (bool, string) {
       br = append(br, gameData[bri+c])
     }
 
-    fmt.Println(br)
-
     // cv == cellvalue
     var cv string
     for s := 0; s < bs; s++ {
@@ -85,8 +83,6 @@ func checkWinner(gameData []string) (bool, string) {
       bc = append(bc, gameData[bci])
     }
 
-    fmt.Println(bc)
-
     // cv == cellvalue
     var cv string
     for s := 0; s < bs; s++ {
@@ -112,8 +108,6 @@ func checkWinner(gameData []string) (bool, string) {
     bdl = append(bdl, gameData[bdli])
   }
 
-  fmt.Println(bdl)
-
   var cv string
   for s := 0; s < bs; s++ {
     if cv == "" {
@@ -136,8 +130,6 @@ func checkWinner(gameData []string) (bool, string) {
     }
     bdr = append(bdr, gameData[bdri])
   }
-
-  fmt.Println(bdr)
 
   cv = ""
   for s := 0; s < bs; s++ {
