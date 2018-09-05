@@ -3,7 +3,7 @@ package main
 
 // maxRounds is the amount of rounds of a tic tac toe game
 const (
-  version string = "v1.2.1"
+  version string = "v2.0 alpha1"
   maxRounds int = 9
 )
 
@@ -20,6 +20,7 @@ func initGame() {
   // Because we are dealing with a slice we can pass it around freely without
   // pointers, because it is already a reference type
   gameData := []string{
+    "3",
     "1", "2", "3",
     "4", "5", "6",
     "7", "8", "9",

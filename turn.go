@@ -3,6 +3,7 @@ package main
 import (
   "fmt"
   "os"
+  "strconv"
 )
 
 // Function that involves the logic of a round which is played a maximum of nine
@@ -34,42 +35,124 @@ func doTurn(gameData []string, round int, playerToken string, playerName string)
 
 // Function that checks if there is a winner
 func checkWinner(gameData []string) (bool, string) {
-  switch {
-  // Cell 1, 2, and 3 are equal
-  case gameData[0] == gameData[1] && gameData[1] == gameData[2]:
-    return true, gameData[1]
 
-  // Cell 4, 5, and 6 are equal
-  case gameData[3] == gameData[4] && gameData[4] == gameData[5]:
-    return true, gameData[4]
+  // bs == boardSize
+  bs, _ := strconv.Atoi(gameData[0])
 
-  // Cell 7, 8, and 9 are equal
-  case gameData[6] == gameData[7] && gameData[7] == gameData[8]:
-    return true, gameData[7]
+  // bi == boardIndex
+  bri := 1
 
-  // Cell 1, 4, and 7 are equal
-  case gameData[0] == gameData[3] && gameData[3] == gameData[6]:
-    return true, gameData[3]
+  // Check horizontal win conditions
+  for i := 1; i <= bs; i++ {
 
-  // Cell 2, 5, and 8 are equal
-  case gameData[1] == gameData[4] && gameData[4] == gameData[7]:
-    return true, gameData[4]
+    if i != 1 {
+      bri += bs
+    }
 
-  // Cell 3, 6, and 9 are equal
-  case gameData[2] == gameData[5] && gameData[5] == gameData[8]:
-    return true, gameData[5]
+    // br == boardRow == slice of strings with boardsize items
+    br := []string{}
+    for c := 0; c < bs; c++ {
+      br = append(br, gameData[bri+c])
+    }
 
-  // Cell 1, 5, and 9 are equal
-  case gameData[0] == gameData[4] && gameData[4] == gameData[8]:
-    return true, gameData[4]
+    fmt.Println(br)
 
-  // Cell 3, 5, and 7 are equal
-  case gameData[2] == gameData[4] && gameData[4] == gameData[6]:
-    return true, gameData[4]
-
-  default:
-    return false, "null"
+    // cv == cellvalue
+    var cv string
+    for s := 0; s < bs; s++ {
+      if cv == "" {
+        cv = br[s]
+      } else if cv == br[s] && s == bs-1 {
+        return true, br[s]
+      } else if cv == br[s] {
+        continue
+      } else {
+        break
+      }
+    }
   }
+
+  // Check vertical win conditions
+  for i := 1; i <= bs; i++ {
+
+    // bc == boardColumn == slice of strings with boardsize items
+    bc := []string{}
+    bci := i
+    for c := 0; c < bs; c++ {
+      if c != 0 {
+        bci += bs
+      }
+      bc = append(bc, gameData[bci])
+    }
+
+    fmt.Println(bc)
+
+    // cv == cellvalue
+    var cv string
+    for s := 0; s < bs; s++ {
+      if cv == "" {
+        cv = bc[s]
+      } else if cv == bc[s] && s == bs-1 {
+        return true, bc[s]
+      } else if cv == bc[s] {
+        continue
+      } else {
+        break
+      }
+    }
+  }
+
+  // Check diagonal from left to right
+  bdl := []string{}
+  bdli := 1
+  for c := 0; c < bs; c++ {
+    if c != 0 {
+      bdli += bs + 1
+    }
+    bdl = append(bdl, gameData[bdli])
+  }
+
+  fmt.Println(bdl)
+
+  var cv string
+  for s := 0; s < bs; s++ {
+    if cv == "" {
+      cv = bdl[s]
+    } else if cv == bdl[s] && s == bs-1 {
+      return true, bdl[s]
+    } else if cv == bdl[s] {
+      continue
+    } else {
+      break
+    }
+  }
+
+  // Check diagonal from right to left
+  bdr := []string{}
+  bdri := bs
+  for c := 0; c < bs; c++ {
+    if c != 0 {
+      bdri += bs - 1
+    }
+    bdr = append(bdr, gameData[bdri])
+  }
+
+  fmt.Println(bdr)
+
+  cv = ""
+  for s := 0; s < bs; s++ {
+    if cv == "" {
+      cv = bdr[s]
+    } else if cv == bdr[s] && s == bs-1 {
+      return true, bdr[s]
+    } else if cv == bdr[s] {
+      continue
+    } else {
+      break
+    }
+  }
+
+  return false, "null"
 }
 
 // Function that asks the player if he wants to play again

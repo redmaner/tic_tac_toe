@@ -15,7 +15,7 @@ func getPosition(gameData []string, playerToken string) {
 
   if inputValid(playerPosition) {
     if positionValid(gameData, playerPosition) {
-      gameData[playerPosition - 1] = playerToken
+      gameData[playerPosition] = playerToken
     } else {
       inputError(gameData, playerToken, "invalidPosition")
     }
@@ -34,13 +34,13 @@ func inputValid(pp int) bool {
 // If the postion is already taken, the player has to put in another postion
 func positionValid(gameData []string, pp int) bool {
   pps := strconv.Itoa(pp)
-  return gameData[pp - 1] == pps
+  return gameData[pp] == pps
 }
 
 // Universal function to call an inputError caused by either an invalid input or
 // a desired postion already being taken.
 // This function requests the player to put in a desired position once more
-// This will loop until the postion that is given by the player is valid 
+// This will loop until the postion that is given by the player is valid
 // according to inputValid() and positionValid()
 func inputError(gameData []string, playerToken string, err string) {
   switch err {
