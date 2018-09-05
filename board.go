@@ -1,13 +1,27 @@
 package main
 
 import (
-  "os"
   "fmt"
+  "os"
+  "os/exec"
+  "runtime"
 )
 
 func clearScreen() {
-  for s := 1; s <= 5; s++ {
-    fmt.Print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+
+  switch runtime.GOOS {
+  case "linux":
+    cmd := exec.Command("clear")
+    cmd.Stdout = os.Stdout
+    cmd.Run()
+  case "windows":
+    cmd := exec.Command("cmd", "/c", "cls")
+    cmd.Stdout = os.Stdout
+    cmd.Run()
+  default:
+    for s := 1; s <= 5; s++ {
+      fmt.Print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+    }
   }
 }
 

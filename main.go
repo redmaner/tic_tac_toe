@@ -1,7 +1,7 @@
 package main
 
 const (
-  version string = "v1.0"
+  version string = "v1.1"
   maxRounds int = 9
 )
 
