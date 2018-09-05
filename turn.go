@@ -55,18 +55,9 @@ func checkWinner(gameData []string) (bool, string) {
       br = append(br, gameData[bri+c])
     }
 
-    // cv == cellvalue
-    var cv string
-    for s := 0; s < bs; s++ {
-      if cv == "" {
-        cv = br[s]
-      } else if cv == br[s] && s == bs-1 {
-        return true, br[s]
-      } else if cv == br[s] {
-        continue
-      } else {
-        break
-      }
+    isWinner, winnerToken := checkIfWinCondition(br, bs)
+    if isWinner {
+      return isWinner, winnerToken
     }
   }
 
@@ -83,18 +74,9 @@ func checkWinner(gameData []string) (bool, string) {
       bc = append(bc, gameData[bci])
     }
 
-    // cv == cellvalue
-    var cv string
-    for s := 0; s < bs; s++ {
-      if cv == "" {
-        cv = bc[s]
-      } else if cv == bc[s] && s == bs-1 {
-        return true, bc[s]
-      } else if cv == bc[s] {
-        continue
-      } else {
-        break
-      }
+    isWinner, winnerToken := checkIfWinCondition(bc, bs)
+    if isWinner {
+      return isWinner, winnerToken
     }
   }
 
@@ -108,17 +90,9 @@ func checkWinner(gameData []string) (bool, string) {
     bdl = append(bdl, gameData[bdli])
   }
 
-  var cv string
-  for s := 0; s < bs; s++ {
-    if cv == "" {
-      cv = bdl[s]
-    } else if cv == bdl[s] && s == bs-1 {
-      return true, bdl[s]
-    } else if cv == bdl[s] {
-      continue
-    } else {
-      break
-    }
+  isWinner, winnerToken := checkIfWinCondition(bdl, bs)
+  if isWinner {
+    return isWinner, winnerToken
   }
 
   // Check diagonal from right to left
@@ -131,19 +105,27 @@ func checkWinner(gameData []string) (bool, string) {
     bdr = append(bdr, gameData[bdri])
   }
 
-  cv = ""
+  isWinner, winnerToken = checkIfWinCondition(bdr, bs)
+  if isWinner {
+    return isWinner, winnerToken
+  }
+
+  return false, "null"
+}
+
+func checkIfWinCondition(cs []string, bs int) (bool, string) {
+  var cv string
   for s := 0; s < bs; s++ {
     if cv == "" {
-      cv = bdr[s]
-    } else if cv == bdr[s] && s == bs-1 {
-      return true, bdr[s]
-    } else if cv == bdr[s] {
+      cv = cs[s]
+    } else if cv == cs[s] && s == bs-1 {
+      return true, cs[s]
+    } else if cv == cs[s] {
       continue
     } else {
       break
     }
   }
-
   return false, "null"
 }
 
