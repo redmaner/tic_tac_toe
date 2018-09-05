@@ -7,6 +7,7 @@ import (
   "runtime"
 )
 
+// clearScreen is a cross platform function to clear the screen
 func clearScreen() {
 
   switch runtime.GOOS {
@@ -25,6 +26,8 @@ func clearScreen() {
   }
 }
 
+// Function to show the board of tic tac toe
+// This function is universal and is called every round
 func showBoard(gameData []string) {
   clearScreen()
   fmt.Println("------------------")
@@ -40,6 +43,8 @@ func showBoard(gameData []string) {
   fmt.Println("------------------")
 }
 
+// Function that is shown at the end of the game
+// The game can either end with a winner or end in a draw
 func showWinner(gameData []string, winnerToken string) {
   clearScreen()
   showBoard(gameData)

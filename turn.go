@@ -5,6 +5,8 @@ import (
   "os"
 )
 
+// Function that involves the logic of a round which is played a maximum of nine
+// times
 func doTurn(gameData []string, round int, playerToken string, playerName string) {
   showBoard(gameData)
   fmt.Println("Round:", round)
@@ -15,6 +17,9 @@ func doTurn(gameData []string, round int, playerToken string, playerName string)
 
   getPosition(gameData, playerToken)
 
+  // This part determines whether there is a winner or not
+  // This part is only ran after round 5, because it takes at least 5 rounds
+  // a player can win.
   if round >= 5 {
     isWinner, winnerToken := checkWinner(gameData)
     if isWinner {
@@ -27,6 +32,7 @@ func doTurn(gameData []string, round int, playerToken string, playerName string)
   }
 }
 
+// Function that checks if there is a winner
 func checkWinner(gameData []string) (bool, string) {
   switch {
   // Cell 1, 2, and 3 are equal
@@ -66,6 +72,7 @@ func checkWinner(gameData []string) (bool, string) {
   }
 }
 
+// Function that asks the player if he wants to play again
 func playAgain() {
   var playAgain string
   fmt.Print("\nWould you like to play again? [yes / no] ")
