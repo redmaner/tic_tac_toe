@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+  "fmt"
+  "os"
+)
 
 func doTurn(gameData []string, round int, playerToken string, playerName string) {
   showBoard(gameData)
@@ -16,8 +19,10 @@ func doTurn(gameData []string, round int, playerToken string, playerName string)
     isWinner, winnerToken := checkWinner(gameData)
     if isWinner {
       showWinner(gameData, winnerToken)
+      playAgain()
     } else if !isWinner && round == 9 {
       showWinner(gameData, "null")
+      playAgain()
     }
   }
 }
@@ -58,5 +63,17 @@ func checkWinner(gameData []string) (bool, string) {
 
   default:
     return false, "null"
+  }
+}
+
+func playAgain() {
+  var playAgain string
+  fmt.Print("\nWould you like to play again? [yes / no] ")
+  fmt.Scan(&playAgain)
+
+  if playAgain == "yes" {
+    initGame()
+  } else {
+    os.Exit(0)
   }
 }

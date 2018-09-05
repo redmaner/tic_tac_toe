@@ -46,15 +46,11 @@ func showWinner(gameData []string, winnerToken string) {
   switch winnerToken {
   case "X":
     fmt.Println("\nPlayerOne is the winner!")
-    os.Exit(0)
   case "O":
     fmt.Println("\nPlayerTwo is the winner!")
-    os.Exit(0)
   case "null":
     fmt.Println("\nThere are no winners, only losers!")
-    os.Exit(0)
   default:
     fmt.Println("\nThere are no winners, only losers!")
-    os.Exit(0)
   }
 }
