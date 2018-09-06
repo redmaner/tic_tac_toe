@@ -10,7 +10,10 @@ import (
 // Function that involves the logic of a round which is played a maximum of nine
 // times
 func round(gameData []string, round int, playerToken string, playerName string) {
+  maxRounds, boardSize := getData(gameData)
+
   board.Draw(gameData)
+  fmt.Print("Board: ", boardSize, "x", boardSize, "\n")
   fmt.Println("Round:", round)
   fmt.Println("Player:", playerName)
   fmt.Println("Token:", playerToken)
@@ -22,7 +25,6 @@ func round(gameData []string, round int, playerToken string, playerName string) 
   // This part determines whether there is a winner or not
   // This part is only ran after round 5, because it takes at least 5 rounds
   // a player can win.
-  maxRounds, boardSize := getData(gameData)
   if round >= boardSize * 2 - 1 {
     isWinner, winnerToken := checkWinner(gameData)
     if isWinner {
