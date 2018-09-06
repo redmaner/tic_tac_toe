@@ -4,12 +4,14 @@ import (
   "fmt"
   "os"
   "strconv"
+  "time"
+  "github.com/redmaner/tictacgo/AI"
   "github.com/redmaner/tictacgo/board"
 )
 
 // Function that involves the logic of a round which is played a maximum of nine
 // times
-func round(gameData []string, round int, playerToken string, playerName string) {
+func round(gameData []string, round int, playerToken string, opponentToken string, playerName string) {
   maxRounds, boardSize := getData(gameData)
 
   board.Draw(gameData)
@@ -20,7 +22,12 @@ func round(gameData []string, round int, playerToken string, playerName string) 
   fmt.Println("------------------")
   fmt.Println("")
 
-  getPosition(gameData, playerToken)
+  if playerName == "AI" {
+    AI.Play(gameData, opponentToken, playerToken)
+    time.Sleep(500 * time.Millisecond)
+  } else {
+    getPosition(gameData, playerToken)
+  }
 
   // This part determines whether there is a winner or not
   // This part is only ran after round 5, because it takes at least 5 rounds

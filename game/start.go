@@ -2,7 +2,6 @@ package game
 
 import (
   "strconv"
-  "github.com/redmaner/tictacgo/AI"
 )
 
 // Initialize and run the game
@@ -21,10 +20,9 @@ func Start(boardSize int) {
   maxRounds, _ := getData(gameData)
   for r := 1; r <= maxRounds; r++ {
     if r%2 == 0 {
-      //round(gameData, r, "O", "PlayerTwo")
-      AI.Play(gameData, "X", "O")
+      round(gameData, r, "O", "X", "AI")
     } else {
-      round(gameData, r, "X", "PlayerOne")
+      round(gameData, r, "X", "O", "AI")
     }
   }
 }
