@@ -44,9 +44,10 @@ func positionValid(gameData []string, pp int) bool {
 // This will loop until the postion that is given by the player is valid
 // according to inputValid() and positionValid()
 func inputError(gameData []string, playerToken string, err string) {
+  maxRounds, _ := getData(gameData)
   switch err {
   case "invalidInput":
-    fmt.Println("Input was invalid. Input must be a number betweeen 1 and 9")
+    fmt.Println("Input was invalid. Input must be a number betweeen 1 and", maxRounds)
     getPosition(gameData, playerToken)
   case "invalidPosition":
     fmt.Println("Position is already taken")
