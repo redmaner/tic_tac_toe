@@ -1,6 +1,6 @@
 # Tic Tac Go
 
-Tic Tac Go is a traditional tic tac toe game, written in Go.<br>
+Tic Tac Go is a traditional tic tac toe game, written in Go.
 Tic Tac Go can be played from your linux terminal or windows cmd / powershell.<br>
 
 ## Starting a game
@@ -17,7 +17,7 @@ Starting a Tic Tac Go game is easy
 ```
 
 ## Starting a game with different board size
-Tic Tac Go initializes with a traditional 3x3 board.<br>
+Tic Tac Go initializes with a traditional 3x3 board.
 Tic Tac Go supports custom board sizes up to 100x100.<br>
 <br>
 To start a Tic Tac Go game with a different board size, simply use a number as argument<br>
