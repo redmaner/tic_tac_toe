@@ -1,3 +1,3 @@
 package board
 
-const version string = "v2.0.1"
+const version string = "v2.0.2"
