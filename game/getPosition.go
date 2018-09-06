@@ -10,7 +10,7 @@ func getPosition(gameData []string, playerToken string) {
 
   var playerPosition int
 
-  maxRounds := getMaxRounds(gameData)
+  maxRounds, _ := getData(gameData)
   fmt.Print("Please enter desired position [1-", maxRounds, "]: ")
   fmt.Scan(&playerPosition)
 

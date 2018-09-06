@@ -22,32 +22,33 @@ func round(gameData []string, round int, playerToken string, playerName string) 
   // This part determines whether there is a winner or not
   // This part is only ran after round 5, because it takes at least 5 rounds
   // a player can win.
-  if round >= 5 {
+  maxRounds, boardSize := getData(gameData)
+  if round >= boardSize * 2 - 1 {
     isWinner, winnerToken := checkWinner(gameData)
     if isWinner {
       board.End(gameData, winnerToken)
-      playAgain()
-    } else if !isWinner && round == 9 {
+      playAgain(boardSize)
+    } else if !isWinner && round == maxRounds {
       board.End(gameData, "null")
-      playAgain()
+      playAgain(boardSize)
     }
   }
 }
 
 // Function that asks the player if he wants to play again
-func playAgain() {
+func playAgain(boardSize int) {
   var playAgain string
   fmt.Print("\nWould you like to play again? [yes / no] ")
   fmt.Scan(&playAgain)
 
   if playAgain == "yes" {
-    Start()
+    Start(boardSize)
   } else {
     os.Exit(0)
   }
 }
 
-func getMaxRounds(gameData []string) int {
+func getData(gameData []string) (int, int) {
   boardSize, _ := strconv.Atoi(gameData[0])
-  return boardSize * boardSize
+  return boardSize * boardSize, boardSize
 }
