@@ -42,8 +42,13 @@ func Draw(gameData []string) {
 func printBoardLine(boardSize int, maxCellSize int) {
   fmt.Print("\n ")
   for c := 1; c <= boardSize; c++ {
-    for s := 1; s <= maxCellSize * 2; s++ {
-      fmt.Print("-")
+    switch maxCellSize {
+    case 1:
+      fmt.Print("----")
+    case 2:
+      fmt.Print("-----")
+    case 3:
+      fmt.Print("------")
     }
   }
   fmt.Print("\n  ")
