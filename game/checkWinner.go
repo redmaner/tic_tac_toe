@@ -21,7 +21,7 @@ func checkWinner(gameData []string) (bool, string) {
     }
 
     // br == boardRow == slice of strings with boardsize items
-    br := []string{}
+    br := make([]string, 0, bs)
     for c := 0; c < bs; c++ {
       br = append(br, gameData[bri+c])
     }
@@ -36,7 +36,7 @@ func checkWinner(gameData []string) (bool, string) {
   for i := 1; i <= bs; i++ {
 
     // bc == boardColumn == slice of strings with boardsize items
-    bc := []string{}
+    bc := make([]string, 0, bs)
     bci := i
     for c := 0; c < bs; c++ {
       if c != 0 {
@@ -53,7 +53,7 @@ func checkWinner(gameData []string) (bool, string) {
 
   // Check diagonal from left to right
   {
-    bdl := []string{}
+    bdl := make([]string, 0, bs)
     bdli := 1
     for c := 0; c < bs; c++ {
       if c != 0 {
@@ -70,7 +70,7 @@ func checkWinner(gameData []string) (bool, string) {
 
   // Check diagonal from right to left
   {
-    bdr := []string{}
+    bdr := make([]string, 0, bs)
     bdri := bs
     for c := 0; c < bs; c++ {
       if c != 0 {
