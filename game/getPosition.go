@@ -10,10 +10,11 @@ func getPosition(gameData []string, playerToken string) {
 
   var playerPosition int
 
-  fmt.Print("Please enter desired position [1-9]: ")
+  maxRounds := getMaxRounds(gameData)
+  fmt.Print("Please enter desired position [1-", maxRounds, "]: ")
   fmt.Scan(&playerPosition)
 
-  if inputValid(playerPosition) {
+  if inputValid(playerPosition, maxRounds) {
     if positionValid(gameData, playerPosition) {
       gameData[playerPosition] = playerToken
     } else {
@@ -26,8 +27,8 @@ func getPosition(gameData []string, playerToken string) {
 
 // Function that validates the user input
 // The input of the player must be an integer between 1 and 9
-func inputValid(pp int) bool {
-  return pp > 0 && pp <= 9
+func inputValid(pp int, maxRounds int) bool {
+  return pp > 0 && pp <= maxRounds
 }
 
 // Function that validates whether the desired position is free on the board

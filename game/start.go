@@ -1,9 +1,5 @@
 package game
 
-import (
-  "strconv"
-)
-
 // Initialize and run the game
 func Start() {
 
@@ -22,8 +18,7 @@ func Start() {
   // This starts the actual game of 9 rounds
   // PlayerOne plays the uneven rounds
   // PlayerTwo plays the even rounds
-  boardSize, _ := strconv.Atoi(gameData[0])
-  maxRounds := boardSize * boardSize
+  maxRounds := getMaxRounds(gameData)
   for r := 1; r <= maxRounds; r++ {
     if r%2 == 0 {
       round(gameData, r, "O", "PlayerTwo")

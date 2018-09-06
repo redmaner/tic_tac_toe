@@ -3,6 +3,7 @@ package game
 import (
   "fmt"
   "os"
+  "strconv"
   "github.com/redmaner/tictacgo/board"
 )
 
@@ -44,4 +45,9 @@ func playAgain() {
   } else {
     os.Exit(0)
   }
+}
+
+func getMaxRounds(gameData []string) int {
+  boardSize, _ := strconv.Atoi(gameData[0])
+  return boardSize * boardSize
 }
