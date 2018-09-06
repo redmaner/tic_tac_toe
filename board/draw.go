@@ -10,6 +10,7 @@ import (
 func Draw(gameData []string) {
   boardSize, _ := strconv.Atoi(gameData[0])
   maxCells := boardSize * boardSize
+  maxCellSize := len(strconv.Itoa(maxCells))
 
   // Draw the header
   clearScreen()
@@ -20,9 +21,11 @@ func Draw(gameData []string) {
 
   // Draw the board dynamicly, based on the size of the board (boardSize)
   for i := 1; i <= maxCells; i++ {
+    cellSize := len(strconv.Itoa(i))
     fmt.Print(gameData[i])
+    correctCellSize(maxCellSize, cellSize)
     if i % boardSize == 0 && i != maxCells {
-      printBoardLine(boardSize)
+      printBoardLine(boardSize, maxCellSize)
     } else if i % boardSize == 0 && i == maxCells {
       fmt.Print("\n")
     } else {
@@ -36,10 +39,23 @@ func Draw(gameData []string) {
 }
 
 
-func printBoardLine(boardSize int) {
-  fmt.Print("\n -")
+func printBoardLine(boardSize int, maxCellSize int) {
+  fmt.Print("\n ")
   for c := 1; c <= boardSize; c++ {
-    fmt.Print("---")
+    for s := 1; s <= maxCellSize * 2; s++ {
+      fmt.Print("-")
+    }
   }
-  fmt.Print("-\n  ")
+  fmt.Print("\n  ")
+}
+
+func correctCellSize(mcs int, cs int) {
+  if mcs == cs {
+    return
+  } else {
+    d := mcs - cs
+    for i := 1; i <= d; i++ {
+      fmt.Print(" ")
+    }
+  }
 }
