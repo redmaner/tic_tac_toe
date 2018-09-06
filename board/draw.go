@@ -21,7 +21,7 @@ func Draw(gameData []string) {
 
   // Draw the board dynamicly, based on the size of the board (boardSize)
   for i := 1; i <= maxCells; i++ {
-    cellSize := len(strconv.Itoa(i))
+    cellSize := len(gameData[i])
     fmt.Print(gameData[i])
     correctCellSize(maxCellSize, cellSize)
     if i % boardSize == 0 && i != maxCells {
