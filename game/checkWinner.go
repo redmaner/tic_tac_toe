@@ -52,33 +52,37 @@ func checkWinner(gameData []string) (bool, string) {
   }
 
   // Check diagonal from left to right
-  bdl := []string{}
-  bdli := 1
-  for c := 0; c < bs; c++ {
-    if c != 0 {
-      bdli += bs + 1
+  {
+    bdl := []string{}
+    bdli := 1
+    for c := 0; c < bs; c++ {
+      if c != 0 {
+        bdli += bs + 1
+      }
+      bdl = append(bdl, gameData[bdli])
     }
-    bdl = append(bdl, gameData[bdli])
-  }
 
-  isWinner, winnerToken := checkIfWinCondition(bdl, bs)
-  if isWinner {
-    return isWinner, winnerToken
+    isWinner, winnerToken := checkIfWinCondition(bdl, bs)
+    if isWinner {
+      return isWinner, winnerToken
+    }
   }
 
   // Check diagonal from right to left
-  bdr := []string{}
-  bdri := bs
-  for c := 0; c < bs; c++ {
-    if c != 0 {
-      bdri += bs - 1
+  {
+    bdr := []string{}
+    bdri := bs
+    for c := 0; c < bs; c++ {
+      if c != 0 {
+        bdri += bs - 1
+      }
+      bdr = append(bdr, gameData[bdri])
     }
-    bdr = append(bdr, gameData[bdri])
-  }
 
-  isWinner, winnerToken = checkIfWinCondition(bdr, bs)
-  if isWinner {
-    return isWinner, winnerToken
+    isWinner, winnerToken := checkIfWinCondition(bdr, bs)
+    if isWinner {
+      return isWinner, winnerToken
+    }
   }
 
   return false, "null"
