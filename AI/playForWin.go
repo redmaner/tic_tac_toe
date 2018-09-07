@@ -1,13 +1,21 @@
 package AI
 
 import (
+  "math/rand"
   "strconv"
+  "time"
 )
 
 func playForWin(gameData []string, ot string, ait string) bool {
 
   // boardSize
   bs := getBoardSize(gameData)
+
+  // Max possible sequences
+  ms := bs + bs + 2
+
+  // Empty multi dimensional slice, to store available sequences as a slice of strings
+  as := make([][]string, 0, ms)
 
   var seq []string
   var seqTokens int
@@ -30,9 +38,11 @@ func playForWin(gameData []string, ot string, ait string) bool {
 
     // Opponent token count
     otc, aitc := countTokens(br, ot, ait)
-    if otc == 0 && aitc >= seqTokens {
+    if otc == 0 && aitc > seqTokens {
       seq = br
       seqTokens = aitc
+    } else if otc == 0 && aitc == 0 {
+      as = append(as, br)
     }
   }
 
@@ -51,9 +61,11 @@ func playForWin(gameData []string, ot string, ait string) bool {
 
     // Opponent token count
     otc, aitc := countTokens(bc, ot, ait)
-    if otc == 0 && aitc >= seqTokens {
+    if otc == 0 && aitc > seqTokens {
       seq = bc
       seqTokens = aitc
+    } else if otc == 0 && aitc == 0 {
+      as = append(as, bc)
     }
   }
 
@@ -70,9 +82,11 @@ func playForWin(gameData []string, ot string, ait string) bool {
 
     // Opponent token count
     otc, aitc := countTokens(bdl, ot, ait)
-    if otc == 0 && aitc >= seqTokens {
+    if otc == 0 && aitc > seqTokens {
       seq = bdl
       seqTokens = aitc
+    } else if otc == 0 && aitc == 0 {
+      as = append(as, bdl)
     }
   }
 
@@ -89,15 +103,31 @@ func playForWin(gameData []string, ot string, ait string) bool {
 
     // Opponent token count
     otc, aitc := countTokens(bdr, ot, ait)
-    if otc == 0 && aitc >= seqTokens {
+    if otc == 0 && aitc > seqTokens {
       seq = bdr
       seqTokens = aitc
+    } else if otc == 0 && aitc == 0 {
+      as = append(as, bdr)
     }
   }
 
+  // If a sequence has already AI tokens, play the sequence with the most AI seq
+  // This is the play for a winning sequence
   if seq != nil {
     makePlayForWin(gameData, seq, ot, ait)
     return true
+  }
+
+  // If there is no sequence yet with an AI token, and there a sequences where
+  // the opponent hasn't played yet, play an availble sequence.
+  // If there are more availble sequences, play a random sequence.
+  // This will make the play of the AI more unpredictable
+  if len(as) != 0 {
+    seed := rand.NewSource(time.Now().UnixNano())
+    rs := rand.New(seed)
+
+    rsv := rs.Intn(len(as))
+    makePlayForWin(gameData, as[rsv], ot, ait)
   }
 
   return false
