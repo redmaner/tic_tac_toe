@@ -128,6 +128,7 @@ func playForWin(gameData []string, ot string, ait string) bool {
 
     rsv := rs.Intn(len(as))
     makePlayForWin(gameData, as[rsv], ot, ait)
+    return true
   }
 
   return false
