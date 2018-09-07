@@ -15,6 +15,48 @@ func playForWin(gameData []string, ot string, ait string) bool {
   // bi == boardIndex
   bri := 1
 
+  // Check horizontal win conditions
+  for i := 1; i <= bs; i++ {
+
+    if i != 1 {
+      bri += bs
+    }
+
+    // br == boardRow == slice of strings with boardsize items
+    br := make([]string, 0, bs)
+    for c := 0; c < bs; c++ {
+      br = append(br, gameData[bri+c])
+    }
+
+    // Opponent token count
+    otc, aitc := countTokens(br, ot, ait)
+    if otc == 0 && aitc >= seqTokens {
+      seq = br
+      seqTokens = aitc
+    }
+  }
+
+  // Check vertical win conditions
+  for i := 1; i <= bs; i++ {
+
+    // bc == boardColumn == slice of strings with boardsize items
+    bc := make([]string, 0, bs)
+    bci := i
+    for c := 0; c < bs; c++ {
+      if c != 0 {
+        bci += bs
+      }
+      bc = append(bc, gameData[bci])
+    }
+
+    // Opponent token count
+    otc, aitc := countTokens(bc, ot, ait)
+    if otc == 0 && aitc >= seqTokens {
+      seq = bc
+      seqTokens = aitc
+    }
+  }
+
   // Check diagonal from left to right
   {
     bdl := make([]string, 0, bs)
@@ -49,48 +91,6 @@ func playForWin(gameData []string, ot string, ait string) bool {
     otc, aitc := countTokens(bdr, ot, ait)
     if otc == 0 && aitc >= seqTokens {
       seq = bdr
-      seqTokens = aitc
-    }
-  }
-
-  // Check vertical win conditions
-  for i := 1; i <= bs; i++ {
-
-    // bc == boardColumn == slice of strings with boardsize items
-    bc := make([]string, 0, bs)
-    bci := i
-    for c := 0; c < bs; c++ {
-      if c != 0 {
-        bci += bs
-      }
-      bc = append(bc, gameData[bci])
-    }
-
-    // Opponent token count
-    otc, aitc := countTokens(bc, ot, ait)
-    if otc == 0 && aitc >= seqTokens {
-      seq = bc
-      seqTokens = aitc
-    }
-  }
-
-  // Check horizontal win conditions
-  for i := 1; i <= bs; i++ {
-
-    if i != 1 {
-      bri += bs
-    }
-
-    // br == boardRow == slice of strings with boardsize items
-    br := make([]string, 0, bs)
-    for c := 0; c < bs; c++ {
-      br = append(br, gameData[bri+c])
-    }
-
-    // Opponent token count
-    otc, aitc := countTokens(br, ot, ait)
-    if otc == 0 && aitc >= seqTokens {
-      seq = br
       seqTokens = aitc
     }
   }
