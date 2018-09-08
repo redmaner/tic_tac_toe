@@ -33,3 +33,15 @@ func countTokens(ss []string, ot string, ait string) (int, int) {
   }
   return oCounter, aiCounter
 }
+
+func makePlay(gameData []string, ss []string, ot string, ait string) {
+  for _, value := range ss {
+    if value == ot || value == ait {
+      continue
+    } else {
+      index, _ := strconv.Atoi(value)
+      gameData[index] = ait
+      break
+    }
+  }
+}

@@ -2,7 +2,6 @@ package AI
 
 import (
   "math/rand"
-  "strconv"
   "time"
 )
 
@@ -114,7 +113,7 @@ func playForWin(gameData []string, ot string, ait string) bool {
   // If a sequence has already AI tokens, play the sequence with the most AI seq
   // This is the play for a winning sequence
   if seq != nil {
-    makePlayForWin(gameData, seq, ot, ait)
+    makePlay(gameData, seq, ot, ait)
     return true
   }
 
@@ -127,21 +126,9 @@ func playForWin(gameData []string, ot string, ait string) bool {
     rs := rand.New(seed)
 
     rsv := rs.Intn(len(as))
-    makePlayForWin(gameData, as[rsv], ot, ait)
+    makePlay(gameData, as[rsv], ot, ait)
     return true
   }
 
   return false
-}
-
-func makePlayForWin(gameData []string, ss []string, ot string, ait string) {
-  for _, value := range ss {
-    if value == ot || value == ait {
-      continue
-    } else {
-      index, _ := strconv.Atoi(value)
-      gameData[index] = ait
-      break
-    }
-  }
 }

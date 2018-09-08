@@ -1,9 +1,5 @@
 package AI
 
-import (
-  "strconv"
-)
-
 // First priority of the AI is to extend the game as long as possible
 // This means that the other player cannot finish his game by completing a
 // winning sequence.
@@ -44,7 +40,7 @@ func playObstructive(gameData []string, ot string, ait string) bool {
     // Opponent token count
     otc, aitc := countTokens(br, ot, ait)
     if otc >= om && aitc == 0 {
-      makeObstructivePlay(gameData, br, ot, ait)
+      makePlay(gameData, br, ot, ait)
       return true
     }
   }
@@ -65,7 +61,7 @@ func playObstructive(gameData []string, ot string, ait string) bool {
     // Opponent token count
     otc, aitc := countTokens(bc, ot, ait)
     if otc >= om && aitc == 0 {
-      makeObstructivePlay(gameData, bc, ot, ait)
+      makePlay(gameData, bc, ot, ait)
       return true
     }
   }
@@ -84,7 +80,7 @@ func playObstructive(gameData []string, ot string, ait string) bool {
     // Opponent token count
     otc, aitc := countTokens(bdl, ot, ait)
     if otc >= om && aitc == 0 {
-      makeObstructivePlay(gameData, bdl, ot, ait)
+      makePlay(gameData, bdl, ot, ait)
       return true
     }
   }
@@ -103,22 +99,10 @@ func playObstructive(gameData []string, ot string, ait string) bool {
     // Opponent token count
     otc, aitc := countTokens(bdr, ot, ait)
     if otc >= om && aitc == 0 {
-      makeObstructivePlay(gameData, bdr, ot, ait)
+      makePlay(gameData, bdr, ot, ait)
       return true
     }
   }
 
   return false
-}
-
-func makeObstructivePlay(gameData []string, ss []string, ot string, ait string) {
-  for _, value := range ss {
-    if value == ot || value == ait {
-      continue
-    } else {
-      index, _ := strconv.Atoi(value)
-      gameData[index] = ait
-      break
-    }
-  }
 }
