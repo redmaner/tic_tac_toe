@@ -15,6 +15,11 @@ func (g *game) playRound(pos string) {
 	// Increase round
 	g.round++
 
+	// Check winner
+	if winner, sign := g.checkWinner(); winner {
+		g.winner = sign
+	}
+
 	// draw board
 	g.drawPlayBoard()
 }

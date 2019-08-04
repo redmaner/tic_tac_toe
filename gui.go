@@ -63,8 +63,17 @@ func (g *game) boardGrid() *fyne.Container {
 		rows[rowNumber+1] = fyne.NewContainerWithLayout(layout.NewGridLayout(g.boardSize), row...)
 	}
 
-	// playerSign
-	labelSign := widget.NewLabel(fmt.Sprintf("Player: %s", g.getPlayerSign()))
+	var labelSign *widget.Label
+	switch {
+	case g.winner != "":
+		// playerSign
+		labelSign = widget.NewLabel(fmt.Sprintf("Player %s has won", g.winner))
+	case g.round > g.boardSize*g.boardSize:
+		labelSign = widget.NewLabel("There are no winners")
+	default:
+		// playerSign
+		labelSign = widget.NewLabel(fmt.Sprintf("Player: %s", g.getPlayerSign()))
+	}
 	labelSign.Alignment = fyne.TextAlignLeading
 	labelSign.TextStyle.Monospace = true
 	rows[g.boardSize+1] = labelSign
@@ -78,7 +87,7 @@ func (g *game) boardGrid() *fyne.Container {
 // addButton returns a button
 func (g *game) addButton(text string, action func()) *widget.Button {
 	button := widget.NewButton(text, action)
-	if text == "X" || text == "O" {
+	if text == "X" || text == "O" || g.winner != "" {
 		button.Disable()
 	}
 

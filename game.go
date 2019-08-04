@@ -10,6 +10,7 @@ type game struct {
 	board     []string
 	boardSize int
 	round     int
+	winner    string
 
 	// fyne toolkit
 	app    fyne.App
