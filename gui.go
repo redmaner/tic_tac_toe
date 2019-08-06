@@ -2,8 +2,6 @@ package main
 
 import (
 	"fmt"
-	"strconv"
-	"strings"
 
 	"fyne.io/fyne"
 	"fyne.io/fyne/layout"
@@ -38,14 +36,14 @@ func (g *game) boardSizeSelect() *fyne.Container {
 	return fyne.NewContainerWithLayout(
 		layout.NewGridLayout(1),
 		label,
-		g.boardSizeButton("3x3"),
-		g.boardSizeButton("4x4"),
-		g.boardSizeButton("5x5"),
-		g.boardSizeButton("6x6"),
-		g.boardSizeButton("7x7"),
-		g.boardSizeButton("8x8"),
-		g.boardSizeButton("9x9"),
-		g.boardSizeButton("10x10"),
+		g.boardSizeButton("3x3", 3),
+		g.boardSizeButton("4x4", 4),
+		g.boardSizeButton("5x5", 5),
+		g.boardSizeButton("6x6", 6),
+		g.boardSizeButton("7x7", 7),
+		g.boardSizeButton("8x8", 8),
+		g.boardSizeButton("9x9", 9),
+		g.boardSizeButton("10x10", 10),
 	)
 }
 
@@ -115,10 +113,8 @@ func (g *game) gameButton(char string) *widget.Button {
 }
 
 // boardSizeButton
-func (g *game) boardSizeButton(char string) *widget.Button {
+func (g *game) boardSizeButton(char string, size int) *widget.Button {
 	action := func() {
-		str := strings.Split(char, "x")
-		size, _ := strconv.Atoi(str[0])
 		g.setBoardSize(size)
 	}
 	return g.addButton(char, action)
