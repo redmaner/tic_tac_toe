@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"strconv"
+	"strings"
 
 	"fyne.io/fyne"
 	"fyne.io/fyne/layout"
@@ -10,14 +12,21 @@ import (
 
 func (g *game) drawPlayBoard() {
 
-	// When the round is zero, we ask the player to select the board size
-	switch g.round {
-	case 0:
-		g.window.SetContent(g.boardSizeSelect())
+	switch {
+	case g.players[0] == nil:
+		fmt.Println("We need to configure player 1")
+	case g.players[1] == nil:
+		fmt.Println("We need to configure player 2")
 	default:
+		if g.getCurrentPlayer().machine {
+			fmt.Println("Do specific machine code")
+			break
+		}
+
+		// Do human code
 		g.window.SetContent(g.boardGrid())
+		g.window.Show()
 	}
-	g.window.Show()
 }
 
 func (g *game) boardSizeSelect() *fyne.Container {
@@ -34,6 +43,9 @@ func (g *game) boardSizeSelect() *fyne.Container {
 		g.boardSizeButton("5x5"),
 		g.boardSizeButton("6x6"),
 		g.boardSizeButton("7x7"),
+		g.boardSizeButton("8x8"),
+		g.boardSizeButton("9x9"),
+		g.boardSizeButton("10x10"),
 	)
 }
 
@@ -65,14 +77,14 @@ func (g *game) boardGrid() *fyne.Container {
 
 	var labelSign *widget.Label
 	switch {
-	case g.winner != "":
+	case g.winner != nil:
 		// playerSign
-		labelSign = widget.NewLabel(fmt.Sprintf("Player %s has won", g.winner))
+		labelSign = widget.NewLabel(fmt.Sprintf("Player %s has won", g.winner.name))
 	case g.round > g.boardSize*g.boardSize:
 		labelSign = widget.NewLabel("There are no winners")
 	default:
 		// playerSign
-		labelSign = widget.NewLabel(fmt.Sprintf("Player: %s", g.getPlayerSign()))
+		labelSign = widget.NewLabel(fmt.Sprintf("Player: %s", g.getCurrentPlayer().name))
 	}
 	labelSign.Alignment = fyne.TextAlignLeading
 	labelSign.TextStyle.Monospace = true
@@ -87,7 +99,7 @@ func (g *game) boardGrid() *fyne.Container {
 // addButton returns a button
 func (g *game) addButton(text string, action func()) *widget.Button {
 	button := widget.NewButton(text, action)
-	if text == "X" || text == "O" || g.winner != "" {
+	if text == g.players[0].sign || text == g.players[1].sign || g.winner != nil {
 		button.Disable()
 	}
 
@@ -105,18 +117,9 @@ func (g *game) gameButton(char string) *widget.Button {
 // boardSizeButton
 func (g *game) boardSizeButton(char string) *widget.Button {
 	action := func() {
-		switch char {
-		case "3x3":
-			g.setBoardSize(3)
-		case "4x4":
-			g.setBoardSize(4)
-		case "5x5":
-			g.setBoardSize(5)
-		case "6x6":
-			g.setBoardSize(6)
-		case "7x7":
-			g.setBoardSize(7)
-		}
+		str := strings.Split(char, "x")
+		size, _ := strconv.Atoi(str[0])
+		g.setBoardSize(size)
 	}
 	return g.addButton(char, action)
 }

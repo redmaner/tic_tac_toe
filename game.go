@@ -10,7 +10,8 @@ type game struct {
 	board     []string
 	boardSize int
 	round     int
-	winner    string
+	winner    *player
+	players   [2]*player
 
 	// fyne toolkit
 	app    fyne.App
@@ -37,6 +38,20 @@ func (g *game) setBoardSize(boardSize int) {
 
 func (g *game) start() {
 	g.window = g.app.NewWindow("Tic Tac Go")
-	g.drawPlayBoard()
-	g.app.Run()
+
+	g.players[0] = &player{
+		name:    "Red",
+		sign:    "X",
+		machine: false,
+	}
+
+	g.players[1] = &player{
+		name:    "Maner",
+		sign:    "O",
+		machine: false,
+	}
+
+	// Set the board size
+	g.window.SetContent(g.boardSizeSelect())
+	g.window.ShowAndRun()
 }
