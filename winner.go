@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 // Function that checks if there is a winner
 func (g *game) checkWinner() (bool, *player) {
 
@@ -100,12 +98,8 @@ func (g *game) checkIfWinCondition(cellSlice []string) (bool, *player) {
 
 	switch {
 	case g.players[0].sign == winSign:
-		fmt.Println(cellSlice)
-		fmt.Println(g.board)
 		return true, g.players[0]
 	case g.players[1].sign == winSign:
-		fmt.Println(cellSlice)
-		fmt.Println(g.board)
 		return true, g.players[1]
 	default:
 		return false, nil

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 
 	"fyne.io/fyne"
 	"fyne.io/fyne/layout"
@@ -12,39 +13,24 @@ func (g *game) drawPlayBoard() {
 
 	switch {
 	case g.players[0] == nil:
-		fmt.Println("We need to configure player 1")
+		g.window.SetContent(g.selectPlayer(0, "Player 1"))
 	case g.players[1] == nil:
-		fmt.Println("We need to configure player 2")
+		g.window.SetContent(g.selectPlayer(1, "Player 2"))
 	default:
+
+		if g.players[0].sign == g.players[1].sign {
+			g.players[1].sign = "%"
+		}
+
 		if g.getCurrentPlayer().machine {
 			fmt.Println("Do specific machine code")
-			break
+			return
 		}
 
 		// Do human code
 		g.window.SetContent(g.boardGrid())
 		g.window.Show()
 	}
-}
-
-func (g *game) boardSizeSelect() *fyne.Container {
-
-	label := widget.NewLabel("Select a board size:")
-	label.Alignment = fyne.TextAlignLeading
-	label.TextStyle.Monospace = true
-
-	return fyne.NewContainerWithLayout(
-		layout.NewGridLayout(1),
-		label,
-		g.boardSizeButton("3x3", 3),
-		g.boardSizeButton("4x4", 4),
-		g.boardSizeButton("5x5", 5),
-		g.boardSizeButton("6x6", 6),
-		g.boardSizeButton("7x7", 7),
-		g.boardSizeButton("8x8", 8),
-		g.boardSizeButton("9x9", 9),
-		g.boardSizeButton("10x10", 10),
-	)
 }
 
 // BoardGrid is function that creates a container with the Tic Tac Toe board
@@ -77,7 +63,7 @@ func (g *game) boardGrid() *fyne.Container {
 	switch {
 	case g.winner != nil:
 		// playerSign
-		labelSign = widget.NewLabel(fmt.Sprintf("Player %s has won", g.winner.name))
+		labelSign = widget.NewLabel(fmt.Sprintf("%s has won!", g.winner.name))
 	case g.round > g.boardSize*g.boardSize:
 		labelSign = widget.NewLabel("There are no winners")
 	default:
@@ -112,10 +98,43 @@ func (g *game) gameButton(char string) *widget.Button {
 	return g.addButton(char, action)
 }
 
+func (g *game) boardSizeSelect() *fyne.Container {
+
+	label := widget.NewLabel("Select a board size:")
+	label.Alignment = fyne.TextAlignLeading
+	label.TextStyle.Monospace = true
+
+	return fyne.NewContainerWithLayout(
+		layout.NewGridLayout(1),
+		label,
+		g.boardSizeButton("3x3", 3),
+		g.boardSizeButton("4x4", 4),
+		g.boardSizeButton("5x5", 5),
+		g.boardSizeButton("6x6", 6),
+		g.boardSizeButton("7x7", 7),
+		g.boardSizeButton("8x8", 8),
+		g.boardSizeButton("9x9", 9),
+		g.boardSizeButton("10x10", 10),
+	)
+}
+
 // boardSizeButton
 func (g *game) boardSizeButton(char string, size int) *widget.Button {
 	action := func() {
 		g.setBoardSize(size)
 	}
-	return g.addButton(char, action)
+	return widget.NewButton(char, action)
+}
+
+// setBoardSize sets the board size
+func (g *game) setBoardSize(boardSize int) {
+	board := make([]string, 0)
+	for i := 1; i <= boardSize*boardSize; i++ {
+		board = append(board, strconv.Itoa(i))
+	}
+
+	g.board = board
+	g.boardSize = boardSize
+	g.round = 1
+	g.drawPlayBoard()
 }
