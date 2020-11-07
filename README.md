@@ -1,5 +1,7 @@
 # Tic Tac Go
 
+
+
 Tic Tac Go is a traditional tic tac toe game, written in Go.
 Tic Tac Go can be played from your linux terminal or windows cmd / powershell.<br>
 
